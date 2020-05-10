@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.prefs.Preferences;
+
 
 public final class SmeltingBook extends JavaPlugin implements Listener {
 
@@ -30,13 +32,20 @@ public final class SmeltingBook extends JavaPlugin implements Listener {
         getServer().getConsoleSender().sendMessage(message);
     }
 
+    public static class configVariables {
+        public static Integer dropPercentage = null;
+    }
+
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
+        configVariables.dropPercentage = this.getConfig().getInt("dropPercentage");
+        alert(String.valueOf(configVariables.dropPercentage));
         alert("Akkoza's Auto Smelting Plugin loaded");
         PluginManager manager = getServer().getPluginManager();
         manager.registerEvents(this, this);
 
-        this.getCommand("testlore").setExecutor(new EnchantCommand());
+        //this.getCommand("testlore").setExecutor(new EnchantCommand());
         this.getCommand("smeltingbook").setExecutor(new SmeltingBookGive());
     }
 
@@ -65,8 +74,9 @@ public final class SmeltingBook extends JavaPlugin implements Listener {
     public void BlockBroken(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
             Random rand = new Random();
-            int randomInt = rand.nextInt(750000);
-            if (randomInt <= 1750000 && randomInt <= 1) {
+            int randomInt = rand.nextInt(100*5000);
+            alert(String.valueOf(randomInt));
+            if (randomInt >= 1 && randomInt <= configVariables.dropPercentage*5000) {
                 ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
                 ItemMeta bookMeta = book.getItemMeta();
                 List<String> lore = new ArrayList<>();
@@ -209,6 +219,6 @@ public final class SmeltingBook extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        this.saveConfig();
     }
 }
