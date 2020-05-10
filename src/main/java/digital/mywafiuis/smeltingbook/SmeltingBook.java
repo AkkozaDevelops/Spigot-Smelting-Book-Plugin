@@ -74,9 +74,9 @@ public final class SmeltingBook extends JavaPlugin implements Listener {
     public void BlockBroken(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
             Random rand = new Random();
-            int randomInt = rand.nextInt(100*5000);
-            alert(String.valueOf(randomInt));
-            if (randomInt >= 1 && randomInt <= configVariables.dropPercentage*5000) {
+            int randomInt = rand.nextInt(100/**5000*/);
+            //alert(String.valueOf(randomInt));
+            if (randomInt >= 1 && randomInt <= configVariables.dropPercentage/**5000*/ && e.getBlock().getType() == Material.STONE) {
                 ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
                 ItemMeta bookMeta = book.getItemMeta();
                 List<String> lore = new ArrayList<>();
