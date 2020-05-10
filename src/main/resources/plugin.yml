@@ -1,0 +1,13 @@
+name: SmeltingBook
+version: ${project.version}
+main: digital.mywafiuis.smeltingbook.SmeltingBook
+api-version: 1.13
+
+commands:
+  testlore:
+    description: Apply a smelting level to the held item.
+    usage: /setsmeltinglevel <level>
+
+  smeltingbook:
+    description: Gives selected player a Smelting I book.
+    usage: /smeltingbook <player>
