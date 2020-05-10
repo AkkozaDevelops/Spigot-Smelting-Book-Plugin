@@ -121,6 +121,11 @@ public final class SmeltingBook extends JavaPlugin implements Listener {
                         ItemMeta toolMeta = tool.getItemMeta();
                         if (toolMeta instanceof Damageable) {
                             ((Damageable) toolMeta).setDamage(((Damageable) toolMeta).getDamage() + 2);
+                            //if (e.getPlayer().getInventory().getItemInMainHand().getDurability())
+                            if (((Damageable) toolMeta).getDamage() >= e.getPlayer().getInventory().getItemInMainHand().getType().getMaxDurability()) {
+                                e.getPlayer().getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
+                                ((Damageable) toolMeta).setDamage(0);
+                            }
                             e.getBlock().setType(Material.AIR);
                             e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), itemDrop);
                             tool.setItemMeta(toolMeta);
